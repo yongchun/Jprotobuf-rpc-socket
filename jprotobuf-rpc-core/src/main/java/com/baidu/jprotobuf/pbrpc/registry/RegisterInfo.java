@@ -19,7 +19,7 @@ import java.util.Map;
 
 /**
  * POJO class of reigster info.
- * 
+ *
  * @author xiemalin
  * @since 2.27
  */
@@ -66,34 +66,31 @@ public class RegisterInfo {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if(!(obj instanceof RegisterInfo)){
             return false;
         }
+        //
         RegisterInfo other = (RegisterInfo) obj;
-        if (host == null) {
-            if (other.host != null) {
-                return false;
-            }
-        } else if (!host.equals(other.host)) {
-            return false;
+
+        boolean isHostEqual = isEqual(host, other.host);
+        if (!isHostEqual) {
+            return isHostEqual;
         }
+
         if (port != other.port) {
             return false;
         }
-        if (protocol == null) {
-            if (other.protocol != null) {
-                return false;
-            }
-        } else if (!protocol.equals(other.protocol)) {
-            return false;
+
+        boolean isProtocolEqual = isEqual(protocol, other.protocol);
+        if (!isProtocolEqual) {
+            return isProtocolEqual;
         }
-        if (service == null) {
-            if (other.service != null) {
-                return false;
-            }
-        } else if (!service.equals(other.service)) {
-            return false;
+
+        boolean isServiceEqual = isEqual(service, other.service);
+        if (!isServiceEqual) {
+            return isHostEqual;
         }
+
         return true;
     }
 
@@ -106,7 +103,7 @@ public class RegisterInfo {
 
     /**
      * get the host
-     * 
+     *
      * @return the host
      */
     public String getHost() {
@@ -115,7 +112,7 @@ public class RegisterInfo {
 
     /**
      * set host value to host
-     * 
+     *
      * @param host the host to set
      */
     public void setHost(String host) {
@@ -124,7 +121,7 @@ public class RegisterInfo {
 
     /**
      * get the service
-     * 
+     *
      * @return the service
      */
     public String getService() {
@@ -133,7 +130,7 @@ public class RegisterInfo {
 
     /**
      * set service value to service
-     * 
+     *
      * @param service the service to set
      */
     public void setService(String service) {
@@ -142,7 +139,7 @@ public class RegisterInfo {
 
     /**
      * get the protocol
-     * 
+     *
      * @return the protocol
      */
     public String getProtocol() {
@@ -151,7 +148,7 @@ public class RegisterInfo {
 
     /**
      * set protocol value to protocol
-     * 
+     *
      * @param protocol the protocol to set
      */
     public void setProtocol(String protocol) {
@@ -160,7 +157,7 @@ public class RegisterInfo {
 
     /**
      * get the extraInfos
-     * 
+     *
      * @return the extraInfos
      */
     public Map<String, String> getExtraInfos() {
@@ -169,7 +166,7 @@ public class RegisterInfo {
 
     /**
      * set extraInfos value to extraInfos
-     * 
+     *
      * @param extraInfos the extraInfos to set
      */
     public void setExtraInfos(Map<String, String> extraInfos) {
@@ -178,7 +175,7 @@ public class RegisterInfo {
 
     /**
      * get the port
-     * 
+     *
      * @return the port
      */
     public int getPort() {
@@ -187,11 +184,26 @@ public class RegisterInfo {
 
     /**
      * set port value to port
-     * 
+     *
      * @param port the port to set
      */
     public void setPort(int port) {
         this.port = port;
     }
 
+    /**
+     * 比较两个字符串是否相等
+     * 测试类 @see com.baidu.jprotobuf.pbrpc.CommonTest.testIsEqual
+     */
+    public boolean isEqual(String source, String target) {
+        if ((source == null) && (target == null)) {
+            return Boolean.TRUE;
+        }
+
+        if ((source != null) && (source.equals(target))) {
+            return Boolean.TRUE;
+        }
+
+        return Boolean.FALSE;
+    }
 }
